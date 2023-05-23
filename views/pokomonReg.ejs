@@ -1,0 +1,54 @@
+<%- include('partials/header'); -%>
+
+
+
+<form action="/pokomonReg" class="form">
+  <h2>Register new Pokomon</h2>
+  <label for="pokomonName">Pokomon name</label>
+  <input type="text" name="pokomonName"/>
+  <div class="pokomonName error"></div>
+  <label for="ability1">ability1</label>
+  <input type="text" name="ability1"/>
+  <label for="ability2">ability2</label>
+  <input type="text" name="ability2"/>
+  <label for="ability3">ability3</label>
+  <input type="text" name="ability3"/>
+  <button href="" class="button">Register Now</button>
+</form>
+
+<%- include('partials/footer'); -%>
+
+<script>
+  const form = document.querySelector('form');
+  const pokomonNameError = document.querySelector('.pokomonName.error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    // reset errors
+    pokomonNameError.textContent = '';
+    // get values
+    const pokomonName = form.pokomonName.value;
+    const ability1 = form.ability1.value;
+    const ability2 = form.ability2.value;
+    const ability3 = form.ability3.value;
+    const username = document.querySelector('.username').innerText
+    try {
+      const res = await fetch('/pokomonReg', { 
+        method: 'POST', 
+        body: JSON.stringify({ pokomonName, ability1, ability2, ability3, username }),
+        headers: {'Content-Type': 'application/json'}
+      });
+      const data = await res.json();;
+      if (data.errors) {
+        pokomonNameError.textContent = data.errors.pokomonName;
+        return
+      }
+      if (data) {
+        location.assign('/');
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  });
+</script>

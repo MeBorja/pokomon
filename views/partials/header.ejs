@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokomon</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+
+      <% if (user) { %>
+        <% if (user.admin) { %>
+          <li>Admin loged in.</li>
+          <% } %>
+      <li>Welcome,</li>
+      <li class="username"><%= user.username  %></li>
+      <li><a href="/logout">Log out</a></li>
+      <%  } else {%>
+      <li><a href="/login">Log in</a></li>
+      <li><a href="/signup" class="signup">Sign up</a></li>
+      <% } %>
+    </ul>
+  </nav>
+  <div class="logo">
+    <a href="/"><img src="/img/pokomon.png" style="width: 500px;"alt=""></a>
+  </div>
+
+<% if(user) { %>
+<script>
+const redirect = document.querySelector('.username')
+redirect.addEventListener('click', e => {
+  e.preventDefault()
+  location.assign(`/home/${redirect.innerText}`)
+})
+
+</script>
+<% } %>
+  <!-- <nav>
+    <h1><a href="/">Super Based Cube</a></h1>
+  </nav> -->
+  
